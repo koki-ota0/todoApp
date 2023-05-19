@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="jp" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>TO DO</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <h1>TO DO</h1>
+    <form id="addForm">
+        <input id="todoInput" type="text" name="todo" placeholder="追加するアイテムを書いてください" required>
+        <button type="submit">追加</button>
+    </form>
+    <div>
+        <label>フィルター:</label>
+        <select id="filterSelect" onchange="applyFilter()">
+            <option value="all">すべて</option>
+            <option value="checked">完了</option>
+            <option value="unchecked">未完了</option>
+        </select>
+    </div>
+    <ul id="todoList">
+        {% for todo in todos %}
+        <li class="{% if todo.checked %}checked{% else %}unchecked{% endif %}">
+            <input type="checkbox" name="completed" {% if todo.checked %}checked{% endif %} onchange="toggleCheck(this, {{ loop.index0 }})">
+            <span {% if todo.checked %}style="text-decoration: line-through"{% endif %}>{{ todo.todo }}</span>
+            <button onclick="deleteTodo({{ loop.index0 }})">削除</button>
+        </li>
+        {% endfor %}
+    </ul>
+    <script src="../static/script.js"></script>
+</body>
+</html>
+
